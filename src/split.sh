@@ -33,12 +33,27 @@
 delim=' '
 col='0'
 
+function get-col() {
+  local rtn
+  case "$1" in
+  "first")
+    rtn="1"
+    ;;
+  "last")
+    rtn="NF"
+    ;;
+  *)
+    rtn="$1"
+    ;;
+  esac
+  echo "$rtn"
+}
+
 if [[ "$#" == 2 ]]; then
   delim="$1"
-  col="$2"
+  col=$(get-col "$2")
 elif [[ "$#" == 1 ]]; then
-  echo "@TODO handle magical single argument"
-  col="$1"
+  col=$(get-col "$1")
 fi
 
 prog="{ print \$$col }"
